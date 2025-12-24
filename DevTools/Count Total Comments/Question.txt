@@ -1,0 +1,122 @@
+//! https://devtools.tech/questions/s/count-total-comments---qid---ZOhP1z8MNP3Jo0RiK5mg
+
+Problem Statement
+You are tasked with creating a function that counts the total number of comments in a nested comment thread, similar to what you might find on platforms like Reddit, Twitter, or any discussion forum. Each comment can have multiple replies, and those replies can themselves have replies, creating a tree-like structure.
+
+Requirements
+Write a function called countComments.
+
+Arguments
+comments: An array of objects
+Each comment object would have the following structure:
+
+{
+  // The content of the comment
+  text: String,
+  // An array of reply objects that have the same structure
+  replies: Array
+}
+Each reply object follows the same structure, potentially creating deep nesting.
+
+Returns
+Returns a single number representing the total count of all comments (including the root comment and all nested replies at any depth).
+Throw an error if circular reference is found.
+Important
+Your solution should
+
+Your solution should handle any level of nesting properly
+Your solution should have optimal time and space complexity
+The root comment itself (counts as 1)
+Think about how to handle circular references
+If malformed comments object data is passed (missing keys)
+Examples
+const comments = {
+  text: "some comment",
+  replies: [
+    { text: "some comment 1", replies: [] },
+    { text: "some comment 2", replies: [] },
+    { text: "some comment 3", replies: [
+        { text: "some comment 5", replies: [] }
+      ]
+    }
+  ]
+};
+
+// Should return 5
+countComments(comments);
+const comments = {
+  text: "root comment",
+  replies: []
+};
+
+// Should return 1
+countComments(comments);
+const comments = {
+  text: "level 1",
+  replies: [{
+    text: "level 2",
+    replies: [{
+      text: "level 3",
+      replies: [{
+        text: "level 4",
+        replies: []
+      }]
+    }]
+  }]
+};
+
+// Should return 4
+countComments(comments);
+Submission
+Start the timer, complete your solution, test your solution against the test cases provided by the platform, and submit it. Ideally, you should finish this question within 30 mins.
+
+Test Case 1: Single root comment with no replies
+Input: A single root comment with no replies
+
+{
+  "text": "root comment",
+  "replies": []
+}
+Expected Output: The total number of comments should be 1
+
+1
+Test Case 2: Root comment with 3 direct replies
+Input: A root comment with 3 direct replies
+
+{
+  "text": "root comment",
+  "replies": [
+    { "text": "reply 1", "replies": [] },
+    { "text": "reply 2", "replies": [] },
+    { "text": "reply 3", "replies": [] }
+  ]
+}
+Expected Output: The total number of comments should be 4
+
+4
+Test Case 3: Null input
+Input: Null input
+
+null
+Expected Output: The total number of comments should be 0
+
+0
+Test Case 4: Deep nesting (1000 levels)
+Input: A deeply nested comment structure with 1000 levels
+
+{
+  "text": "level 1",
+  "replies": [
+    {
+      "text": "level 2",
+      "replies": [
+        {
+          "text": "level 3",
+          "replies": [
+            // ... up to level 1000
+          ]
+        }
+      ]
+    }
+  ]
+}
